@@ -33,8 +33,10 @@ if __name__ == "__main__":
       cell.style = 'Pandas'
     
     for c in all_committees:
-      committee_assignments.create_sheet(title=c)
-    
+      s = committee_assignments.create_sheet(title=c)
+      local_assn = pd.DataFrame(columns=["School", "First", "Last", "Grade", "Experience", "Email", "Committee"])
+      for r in dataframe_to_rows(local_assn, index=False, header=False):
+        s.append(r)
 
     committee_assignments.save(out_file)
   else:

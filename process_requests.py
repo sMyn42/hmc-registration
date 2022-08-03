@@ -23,19 +23,22 @@ def main():
   # Get school_list
   directory = 'pending-role-requests'
   out_directory = 'satisfied-role-requests'
-  school_list = []
+  school_file_list = []
   # iterate over files in
   # that directory
   for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
     # checking if it is a file
-    if ".csv" in f:
-      school_list.append(pd.read_csv("./" + f))
-      # Move file to completed Directory
-      os.rename(f, os.path.join(out_directory, filename))
+    if ".csv" in f or ".xlsx" in f:
+      school_file_list.append(f)
 
   # do the stuff
-  for school in school_list:
+  for f in school_file_list:
+    school = None
+    if ".csv" in f:
+      school = pd.read_csv(f)
+    elif ".xlsx" in f:
+      school = pd.read_excel(f, dtype=object, usecols='A:O').fillna(" ")
     school_shuffled = school.sample(frac=1)
     school_meta = school_shuffled.iloc[:, :6]
     school_prefs = school_shuffled.iloc[:, 6:14]
@@ -87,12 +90,15 @@ def main():
       # print(grouped_assn_dict.get(c))
       if grouped_assn_dict.get(c) is not None:
         print("Printing " + c + " assignments to sheet.")
-        for r in dataframe_to_rows(grouped_assn_dict.get(c), header=True):
+        for r in dataframe_to_rows(grouped_assn_dict.get(c), index=False, header=False):
           w[c].append(r)
 
     # write new worksheet to file
     # w["Main"] = new_ws
     w.save(out_file)
+
+    # Move file
+    os.rename(f, f.replace(directory, out_directory))
 
 if __name__ == "__main__":
   main()
