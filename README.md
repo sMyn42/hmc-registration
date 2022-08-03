@@ -12,6 +12,6 @@ Otherwise, the files should have proper creation metadata.
 
 ### Usage
 
-Simply place the ```main.py``` script in the same place as all of the spreadsheets.
+Simply place the ```main.py``` script in the base directory. Ensure that new role requests get placed in the ```pending-role-requests``` folder.
 
 Then, run the script in the command line. A new spreadsheet should be created in the results folder with desired placements.
