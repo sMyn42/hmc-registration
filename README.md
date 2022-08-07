@@ -16,7 +16,7 @@ First, run ```pip install -r requirements.txt``` with python3 in the base direct
 
 Simply ensure that the ```main.py``` script is in the base directory. Ensure that new role requests get placed in the ```pending-role-requests``` folder.
 
-Then, run the script in the command line. A new spreadsheet should be created in the results folder with desired placements.
+Then, run the script in the command line (```python create_sheet.py```, followed by ```python process_requests.py```; ```python3``` may be needed, and sheet creation need only be run once). A new spreadsheet should be created in the results folder with desired placements.
 
 Subsequent requests forms should be downloaded to the ```pending-role-requests``` folder and the script should be re-run.
 
