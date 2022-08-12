@@ -81,6 +81,8 @@ def main():
         if c_assn.shape[0] % team_n != 0:
           n_teams = c_assn.shape[0] // team_n
           odds_names = c_assn.iloc[n_teams * team_n:, :]
+          c_assn = c_assn.iloc[:n_teams * team_n, :]
+          grouped_assn_dict[c] = c_assn
           for i in range(odds_names.shape[0]):
             print("REMOVING OVERFILLED TEAM COMMITTEE MEMBER!!!")
             local_current[c] = local_current[c] - 1
