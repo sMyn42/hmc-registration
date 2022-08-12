@@ -6,8 +6,6 @@ from openpyxl import Workbook
 from openpyxl.utils.dataframe import dataframe_to_rows
 from utils import all_committees, global_caps, global_current, out_file
 
-#main 
-
 if __name__ == "__main__":
   if not os.path.exists(out_file):
 
@@ -41,11 +39,3 @@ if __name__ == "__main__":
     committee_assignments.save(out_file)
   else:
     print("Spreadsheet already exists! Delete before rerunning this script.")
-
-
-
-# Add committee-specific spreadsheets
-
-# columns include ID, First, Last, School, Email
-
-# permit reference sheets to be created

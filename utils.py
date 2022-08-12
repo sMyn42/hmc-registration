@@ -51,8 +51,6 @@ special_committees = [
 ]
 team_committees = ["SCOTUS", "G20", "District Court"]
 
-# Have a dictionary that edits all the caps here
-
 global_caps = {
   'House Armed Services' : 50,
   'House Ed Labor (NOVICE)' : 50,
@@ -121,14 +119,14 @@ sheet_to_pref_dict = {'House Armed Services': 'House Armed Services',
  'Senate Judiciary NOVICE': 'Senate Judiciary',
  'Senate Small Biz': 'Senate Small Business and Entrepreneurship',
  'Senate Intel': 'Senate Select Committee on Intelligence',
- 'G20': None,
+ 'G20': 'Group of 20',
  'HistComm': 'Historical Committee',
  'Media': 'Media',
  'NEC': 'National Economic Council',
  'NSC': 'National Security Council',
  'PresCab': 'Presidential Cabinet',
  'SCOTUS': 'Supreme Court',
- 'West Wing': None,
+ 'West Wing': 'West Wing',
  'WHO': 'World Health Organization',
  'UNSC': 'United Nations Security Council',
  'ConCon': 'Constitutional Convention',
@@ -140,7 +138,25 @@ def get_assignment(pref_array, cap_dict):
 
   # THERE IS DUPLICATE CODE
 
-  # prefarray should be 8 long
+  # prefarray should be 8 entries long
+
+  # also during team iteration
+  for p in pref_array:
+    p = p.replace("*", "")
+    if p not in pref_to_sheet_dict.keys():
+      print("Invalid Key Used in Role Request: " + str(p))
+    elif p in team_committees:
+
+      ##########
+      # go to main flow control -> at end of each school, check team committees, and reassign to normal if teams are full. 
+      # make sure caps (local, and global) are handled for teams. 
+      ##########
+
+
+      p = pref_to_sheet_dict[p]
+      if cap_dict["local_current"][p] < cap_dict["local_caps"][p] and global_current[p] < global_caps[p]:
+        return p
+        # caps get updated outside of function
   for p in pref_array:
     p = p.replace("*", "")
     if p not in pref_to_sheet_dict.keys():
@@ -149,7 +165,24 @@ def get_assignment(pref_array, cap_dict):
       p = pref_to_sheet_dict[p]
       if cap_dict["local_current"][p] < cap_dict["local_caps"][p] and global_current[p] < global_caps[p]:
         return p
-        # caps get updated outside of function
+  # nothing worked assign next available committee -> global caps can be changed using the spreadsheet itself.
+  for comm in all_committees:
+    # get local stat, global stat, compare with local cap, global cap, respectively
+    # if the committee is valid, add person to it.
+    if cap_dict["local_current"][comm] < cap_dict["local_caps"][comm] and global_current[comm] < global_caps[comm]:
+      return comm
+  max_comm = "NULL"
+  max_stat = 0
+  for comm, stat in global_current.items():
+    if stat >= max_stat:
+      max_comm = comm
+      max_stat = stat
+  return max_comm
+
+def get_solo_assignment(pref_array, cap_dict):
+
+  # TODO FIX DUPLICATE CODE HERE TOO!
+
   for p in pref_array:
     p = p.replace("*", "")
     if p not in pref_to_sheet_dict.keys():
