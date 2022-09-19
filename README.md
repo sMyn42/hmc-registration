@@ -12,7 +12,7 @@ The files should be in .csv or .xlsx formats.
 
 ### Usage
 
-First, run ```pip install -r requirements.txt``` with python3 in the base directory.
+First, run ```pip (or pip3) install -r requirements.txt``` with python3 in the base directory.
 
 Simply ensure that the ```main.py``` script is in the base directory. Ensure that new role requests get placed in the ```pending-role-requests``` folder.
 
